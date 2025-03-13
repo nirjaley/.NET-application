@@ -4,34 +4,223 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Project Milestones - Project Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .nav-link {
+            color: rgba(255,255,255,.75);
+        }
+        .nav-link:hover {
+            color: white;
+        }
+        .nav-link.active {
+            color: white !important;
+            font-weight: bold;
+        }
+        .content-container {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        .grid-container {
+            overflow-x: auto;
+        }
+        .custom-grid {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .custom-grid th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .filter-container {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        .filter-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand="SELECT &quot;PROJECT_ID&quot;, &quot;P_TASKNAME&quot; FROM &quot;PROJECT&quot;"></asp:SqlDataSource>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand="select p.project_id, p_taskname, p_startdate, p_duedate, project_status, m.milestone_id, milestone_name, milestone_status, due_date from project p join milestone m on p.project_id = m.project_id where p.project_id = :project">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="DropDownList1" Name="project" PropertyName="SelectedValue" />
-                </SelectParameters>
-            </asp:SqlDataSource>
-            <br />
-            Select Project</div>
-    &nbsp;<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="P_TASKNAME" DataValueField="PROJECT_ID">
-        </asp:DropDownList>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="PROJECT_ID,MILESTONE_ID" DataSourceID="SqlDataSource2">
-            <Columns>
-                <asp:BoundField DataField="PROJECT_ID" HeaderText="PROJECT_ID" ReadOnly="True" SortExpression="PROJECT_ID" />
-                <asp:BoundField DataField="P_TASKNAME" HeaderText="P_TASKNAME" SortExpression="P_TASKNAME" />
-                <asp:BoundField DataField="P_STARTDATE" HeaderText="P_STARTDATE" SortExpression="P_STARTDATE" />
-                <asp:BoundField DataField="P_DUEDATE" HeaderText="P_DUEDATE" SortExpression="P_DUEDATE" />
-                <asp:BoundField DataField="PROJECT_STATUS" HeaderText="PROJECT_STATUS" SortExpression="PROJECT_STATUS" />
-                <asp:BoundField DataField="MILESTONE_ID" HeaderText="MILESTONE_ID" ReadOnly="True" SortExpression="MILESTONE_ID" />
-                <asp:BoundField DataField="MILESTONE_NAME" HeaderText="MILESTONE_NAME" SortExpression="MILESTONE_NAME" />
-                <asp:BoundField DataField="MILESTONE_STATUS" HeaderText="MILESTONE_STATUS" SortExpression="MILESTONE_STATUS" />
-                <asp:BoundField DataField="DUE_DATE" HeaderText="DUE_DATE" SortExpression="DUE_DATE" />
-            </Columns>
-        </asp:GridView>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="Dashboard.aspx">SajiloPM</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Dashboard.aspx"><i class="fas fa-home"></i> Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Users.aspx"><i class="fas fa-users"></i> Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Project.aspx"><i class="fas fa-project-diagram"></i> Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="TaskDetails.aspx"><i class="fas fa-tasks"></i> Tasks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Subtask.aspx"><i class="fas fa-list"></i> Subtasks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Milestone.aspx"><i class="fas fa-flag"></i> Milestones</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-chart-bar"></i> Reports
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="UserProjectDetails.aspx">User Projects</a></li>
+                                <li><a class="dropdown-item active" href="ProjectMilestone.aspx">Project Milestones</a></li>
+                                <li><a class="dropdown-item" href="TopPerformer.aspx">Top Performers</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mt-4">
+            <div class="content-container">
+                <h2 class="page-title"><i class="fas fa-flag-checkered me-2"></i>Project Milestones</h2>
+                
+                <!-- Filter Section -->
+                <div class="filter-container">
+                    <h3 class="filter-title"><i class="fas fa-filter me-2"></i>Select Project</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="DropDownList1" class="form-label">Project:</label>
+                                <asp:DropDownList ID="DropDownList1" runat="server" 
+                                    AutoPostBack="True" 
+                                    DataSourceID="SqlDataSource1" 
+                                    DataTextField="P_TASKNAME" 
+                                    DataValueField="PROJECT_ID"
+                                    CssClass="form-select">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Milestones List Section -->
+                <div class="grid-container">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+                        DataKeyNames="PROJECT_ID,MILESTONE_ID" DataSourceID="SqlDataSource2"
+                        CssClass="table table-striped table-hover custom-grid">
+                        <Columns>
+                            <asp:BoundField DataField="PROJECT_ID" HeaderText="Project ID" ReadOnly="True" SortExpression="PROJECT_ID" />
+                            <asp:BoundField DataField="P_TASKNAME" HeaderText="Project Name" SortExpression="P_TASKNAME" />
+                            <asp:TemplateField HeaderText="Start Date" SortExpression="P_STARTDATE">
+                                <ItemTemplate>
+                                    <%# Eval("P_STARTDATE", "{0:yyyy-MM-dd}") %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Due Date" SortExpression="P_DUEDATE">
+                                <ItemTemplate>
+                                    <%# Eval("P_DUEDATE", "{0:yyyy-MM-dd}") %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Project Status" SortExpression="PROJECT_STATUS">
+                                <ItemTemplate>
+                                    <span class='<%# GetStatusClass(Eval("PROJECT_STATUS").ToString()) %>'>
+                                        <%# Eval("PROJECT_STATUS") %>
+                                    </span>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="MILESTONE_ID" HeaderText="Milestone ID" ReadOnly="True" SortExpression="MILESTONE_ID" />
+                            <asp:BoundField DataField="MILESTONE_NAME" HeaderText="Milestone Name" SortExpression="MILESTONE_NAME" />
+                            <asp:TemplateField HeaderText="Milestone Status" SortExpression="MILESTONE_STATUS">
+                                <ItemTemplate>
+                                    <span class='<%# GetStatusClass(Eval("MILESTONE_STATUS").ToString()) %>'>
+                                        <%# Eval("MILESTONE_STATUS") %>
+                                    </span>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Milestone Due Date" SortExpression="DUE_DATE">
+                                <ItemTemplate>
+                                    <%# Eval("DUE_DATE", "{0:yyyy-MM-dd}") %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                        <EmptyDataTemplate>
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i>No milestones found for this project.
+                            </div>
+                        </EmptyDataTemplate>
+                    </asp:GridView>
+                </div>
+                
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+                    ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" 
+                    SelectCommand="SELECT &quot;PROJECT_ID&quot;, &quot;P_TASKNAME&quot; FROM &quot;PROJECT&quot;">
+                </asp:SqlDataSource>
+                
+                <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+                    ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" 
+                    SelectCommand="select p.project_id, p_taskname, p_startdate, p_duedate, project_status, m.milestone_id, milestone_name, milestone_status, due_date from project p join milestone m on p.project_id = m.project_id where p.project_id = :project">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="DropDownList1" Name="project" PropertyName="SelectedValue" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </form>
+    
+    <script runat="server">
+        Protected Function GetStatusClass(status As String) As String
+            Select Case status.ToLower()
+                Case "completed"
+                    Return "badge bg-success"
+                Case "in progress"
+                    Return "badge bg-primary"
+                Case "delayed"
+                    Return "badge bg-warning text-dark"
+                Case "on hold"
+                    Return "badge bg-secondary"
+                Case "cancelled"
+                    Return "badge bg-danger"
+                Case Else
+                    Return "badge bg-info"
+            End Select
+        End Function
+    </script>
 </body>
 </html>
