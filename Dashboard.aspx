@@ -14,57 +14,147 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .navbar {
-            background-color: #343a40;
+            background-color: #4e54c8;
+            background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .navbar-brand {
             font-weight: bold;
+            color: white;
+            letter-spacing: 0.5px;
         }
         .nav-link {
-            color: rgba(255,255,255,.75);
+            color: rgba(255,255,255,.85);
+            transition: all 0.3s ease;
+            margin-right: 5px;
+            border-radius: 4px;
+            padding: 8px 15px !important;
         }
         .nav-link:hover {
             color: white;
+            background-color: rgba(255,255,255,0.1);
         }
         .nav-link.active {
-            color: white !important;
-            font-weight: bold;
+            color: #4e54c8 !important;
+            font-weight: 500;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .dropdown-item:hover {
+            background-color: #f3f4f8;
         }
         .stats-card {
             background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            margin-bottom: 16px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.05);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,.1);
         }
         .stats-card .card-body {
-            padding: 16px;
+            padding: 20px;
         }
         .stats-card h5 {
-            margin-bottom: 8px;
-            color: #495057;
+            margin-bottom: 10px;
+            color: #6c757d;
+            font-weight: 500;
         }
         .stats-card h2 {
             font-weight: bold;
             margin-bottom: 0;
-            color: #343a40;
+            color: #212529;
         }
         .card-icon {
-            font-size: 36px;
-            margin-bottom: 8px;
-            color: #007bff;
+            font-size: 40px;
+            margin-bottom: 15px;
         }
         .chart-container {
             background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .chart-container h4 {
+            color: #4e54c8;
             margin-bottom: 20px;
+            font-weight: 600;
         }
         .chart-canvas {
             height: 300px;
             width: 100%;
+        }
+        .stats-card:nth-child(1) {
+            border-top-color: #4e54c8;
+        }
+        .stats-card:nth-child(1) .card-icon {
+            color: #4e54c8;
+        }
+        .stats-card:nth-child(2) {
+            border-top-color: #ff6b6b;
+        }
+        .stats-card:nth-child(2) .card-icon {
+            color: #ff6b6b;
+        }
+        .stats-card:nth-child(3) {
+            border-top-color: #38b2ac;
+        }
+        .stats-card:nth-child(3) .card-icon {
+            color: #38b2ac;
+        }
+        .stats-card:nth-child(4) {
+            border-top-color: #f6ad55;
+        }
+        .stats-card:nth-child(4) .card-icon {
+            color: #f6ad55;
+        }
+        .quick-link-btn {
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .quick-link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background-color: #4e54c8;
+        }
+        .btn-success {
+            background-color: #38b2ac;
+        }
+        .btn-info {
+            background-color: #63b3ed;
+        }
+        .btn-warning {
+            background-color: #f6ad55;
+            color: white;
+        }
+        .dashboard-header {
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+        .dashboard-header h2 {
+            color: #4e54c8;
+            font-weight: 700;
+        }
+        .text-muted {
+            color: #6c757d !important;
         }
     </style>
 </head>
@@ -139,7 +229,7 @@
 
         <!-- Main Content -->
         <div class="container mt-4">
-            <div class="row">
+            <div class="row dashboard-header">
                 <div class="col-12">
                     <h2>Project Management Dashboard</h2>
                     <p class="text-muted">Welcome to your project management system</p>
@@ -307,8 +397,8 @@
                                         datasets: [{
                                             label: 'Number of Users',
                                             data: userCounts,
-                                            backgroundColor: 'rgba(0, 123, 255, 0.7)',
-                                            borderColor: 'rgba(0, 123, 255, 1)',
+                                            backgroundColor: 'rgba(78, 84, 200, 0.7)',
+                                            borderColor: 'rgba(78, 84, 200, 1)',
                                             borderWidth: 1
                                         }]
                                     },
@@ -320,6 +410,15 @@
                                                 beginAtZero: true,
                                                 ticks: {
                                                     stepSize: 1
+                                                }
+                                            }
+                                        },
+                                        plugins: {
+                                            legend: {
+                                                labels: {
+                                                    font: {
+                                                        family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                                                    }
                                                 }
                                             }
                                         }
@@ -334,25 +433,25 @@
             <!-- Quick Links -->
             <div class="row mt-4">
                 <div class="col-12">
-                    <h4>Quick Links</h4>
+                    <h4 style="color: #4e54c8; margin-bottom: 15px; font-weight: 600;">Quick Links</h4>
                     <div class="row">
                         <div class="col-md-3 mb-3">
-                            <a href="Project.aspx" class="btn btn-primary w-100">
+                            <a href="Project.aspx" class="btn btn-primary w-100 quick-link-btn">
                                 <i class="fas fa-plus-circle me-2"></i>New Project
                             </a>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <a href="TaskDetails.aspx" class="btn btn-success w-100">
+                            <a href="TaskDetails.aspx" class="btn btn-success w-100 quick-link-btn">
                                 <i class="fas fa-clipboard-list me-2"></i>New Task
                             </a>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <a href="Users.aspx" class="btn btn-info w-100 text-white">
+                            <a href="Users.aspx" class="btn btn-info w-100 quick-link-btn text-white">
                                 <i class="fas fa-user-plus me-2"></i>Add User
                             </a>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <a href="TopPerformer.aspx" class="btn btn-warning w-100">
+                            <a href="TopPerformer.aspx" class="btn btn-warning w-100 quick-link-btn">
                                 <i class="fas fa-trophy me-2"></i>View Top Performers
                             </a>
                         </div>
