@@ -12,35 +12,60 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .navbar {
-            background-color: #343a40;
+            background-color: #4e54c8;
+            background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .navbar-brand {
             font-weight: bold;
+            color: white;
+            letter-spacing: 0.5px;
         }
         .nav-link {
-            color: rgba(255,255,255,.75);
+            color: rgba(255,255,255,.85);
+            transition: all 0.3s ease;
+            margin-right: 5px;
+            border-radius: 4px;
+            padding: 8px 15px !important;
         }
         .nav-link:hover {
             color: white;
+            background-color: rgba(255,255,255,0.1);
         }
         .nav-link.active {
-            color: white !important;
-            font-weight: bold;
+            color: #4e54c8 !important;
+            font-weight: 500;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .dropdown-item:hover {
+            background-color: #f3f4f8;
+        }
+        .dropdown-item.active {
+            background-color: #4e54c8;
+            color: white;
         }
         .content-container {
             background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.05);
+            padding: 25px;
+            margin-bottom: 25px;
         }
         .page-title {
             margin-bottom: 20px;
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 10px;
+            color: #4e54c8;
+            font-weight: 700;
         }
         .grid-container {
             overflow-x: auto;
@@ -50,20 +75,68 @@
             border-collapse: collapse;
         }
         .custom-grid th {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
             font-weight: 600;
         }
         .filter-container {
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            padding: 15px;
+            background-color: #f3f4f8;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
         .filter-title {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             margin-bottom: 15px;
-            color: #343a40;
+            color: #4e54c8;
+            font-weight: 600;
+        }
+        .btn-action {
+            margin-right: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background-color: #4e54c8;
+            border: none;
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        .badge {
+            padding: 5px 10px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+        /* Status badge styles */
+        .status-completed {
+            background-color: #198754 !important; /* success green */
+            color: white !important;
+        }
+        .status-in-progress {
+            background-color: #0d6efd !important; /* primary blue */
+            color: white !important;
+        }
+        .status-delayed {
+            background-color: #ffc107 !important; /* warning yellow */
+            color: #212529 !important;
+        }
+        .status-on-hold {
+            background-color: #6c757d !important; /* secondary gray */
+            color: white !important;
+        }
+        .status-cancelled {
+            background-color: #dc3545 !important; /* danger red */
+            color: white !important;
+        }
+        .status-default {
+            background-color: #0dcaf0 !important; /* info blue */
+            color: #212529 !important;
         }
     </style>
 </head>
@@ -115,6 +188,7 @@
         <div class="container mt-4">
             <div class="content-container">
                 <h2 class="page-title"><i class="fas fa-user-project me-2"></i>User Project Details</h2>
+                <p class="text-muted">View projects assigned to each user</p>
                 
                 <!-- Filter Section -->
                 <div class="filter-container">
@@ -159,7 +233,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Status" SortExpression="PROJECT_STATUS">
                                 <ItemTemplate>
-                                    <span class='<%# GetStatusClass(Eval("PROJECT_STATUS").ToString()) %>'>
+                                    <span class='badge <%# GetStatusClass(Eval("PROJECT_STATUS").ToString()) %>'>
                                         <%# Eval("PROJECT_STATUS") %>
                                     </span>
                                 </ItemTemplate>
@@ -198,17 +272,17 @@
         Protected Function GetStatusClass(status As String) As String
             Select Case status.ToLower()
                 Case "completed"
-                    Return "badge bg-success"
+                    Return "status-completed"
                 Case "in progress"
-                    Return "badge bg-primary"
+                    Return "status-in-progress"
                 Case "delayed"
-                    Return "badge bg-warning text-dark"
+                    Return "status-delayed"
                 Case "on hold"
-                    Return "badge bg-secondary"
+                    Return "status-on-hold"
                 Case "cancelled"
-                    Return "badge bg-danger"
+                    Return "status-cancelled"
                 Case Else
-                    Return "badge bg-info"
+                    Return "status-default"
             End Select
         End Function
     </script>

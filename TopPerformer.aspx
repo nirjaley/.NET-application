@@ -12,35 +12,59 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .navbar {
-            background-color: #343a40;
+            background-color: #4e54c8;
+            background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .navbar-brand {
             font-weight: bold;
+            color: white;
+            letter-spacing: 0.5px;
         }
         .nav-link {
-            color: rgba(255,255,255,.75);
+            color: rgba(255,255,255,.85);
+            transition: all 0.3s ease;
+            margin-right: 5px;
+            border-radius: 4px;
+            padding: 8px 15px !important;
         }
         .nav-link:hover {
             color: white;
+            background-color: rgba(255,255,255,0.1);
         }
         .nav-link.active {
-            color: white !important;
-            font-weight: bold;
+            color: #4e54c8 !important;
+            font-weight: 500;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .dropdown-item:hover {
+            background-color: #f3f4f8;
+        }
+        .dropdown-item.active {
+            background-color: #4e54c8;
         }
         .content-container {
             background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.05);
+            padding: 25px;
+            margin-bottom: 25px;
         }
         .page-title {
             margin-bottom: 20px;
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 10px;
+            color: #4e54c8;
+            font-weight: 700;
         }
         .grid-container {
             overflow-x: auto;
@@ -50,24 +74,26 @@
             border-collapse: collapse;
         }
         .custom-grid th {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
             font-weight: 600;
         }
         .filter-container {
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            padding: 15px;
+            background-color: #f3f4f8;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 20px;
             border: 1px solid #dee2e6;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
         .filter-title {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             margin-bottom: 15px;
-            color: #343a40;
+            color: #4e54c8;
+            font-weight: 600;
         }
         .top-performer {
-            background-color: #f8f9fa;
-            border-left: 4px solid #28a745;
+            background-color: #f3f4f8;
+            border-left: 4px solid #38b2ac;
             padding: 10px 15px;
             margin-bottom: 10px;
         }
@@ -83,6 +109,17 @@
         }
         .bronze {
             color: #CD7F32;
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        .btn-primary {
+            background-color: #4e54c8;
+            border: none;
+        }
+        .btn-success {
+            background-color: #38b2ac;
+            border: none;
         }
     </style>
 </head>
@@ -134,6 +171,7 @@
         <div class="container mt-4">
             <div class="content-container">
                 <h2 class="page-title"><i class="fas fa-trophy me-2"></i>Top Performers</h2>
+                <p class="text-muted">View your project's highest achieving users</p>
                 
                 <!-- Filter Section -->
                 <div class="filter-container">

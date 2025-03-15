@@ -12,35 +12,56 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .navbar {
-            background-color: #343a40;
+            background-color: #4e54c8;
+            background-image: linear-gradient(to right, #4e54c8, #8f94fb);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .navbar-brand {
             font-weight: bold;
+            color: white;
+            letter-spacing: 0.5px;
         }
         .nav-link {
-            color: rgba(255,255,255,.75);
+            color: rgba(255,255,255,.85);
+            transition: all 0.3s ease;
+            margin-right: 5px;
+            border-radius: 4px;
+            padding: 8px 15px !important;
         }
         .nav-link:hover {
             color: white;
+            background-color: rgba(255,255,255,0.1);
         }
         .nav-link.active {
-            color: white !important;
-            font-weight: bold;
+            color: #4e54c8 !important;
+            font-weight: 500;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .dropdown-item:hover {
+            background-color: #f3f4f8;
         }
         .content-container {
             background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.05);
+            padding: 25px;
+            margin-bottom: 25px;
         }
         .page-title {
             margin-bottom: 20px;
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 10px;
+            color: #4e54c8;
+            font-weight: 700;
         }
         .grid-container {
             overflow-x: auto;
@@ -50,28 +71,75 @@
             border-collapse: collapse;
         }
         .custom-grid th {
-            background-color: #f8f9fa;
+            background-color: #f3f4f8;
             font-weight: 600;
         }
         .form-container {
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            padding: 15px;
+            background-color: #f3f4f8;
+            border-radius: 10px;
+            padding: 20px;
             margin-top: 20px;
             border: 1px solid #dee2e6;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
         .form-title {
             font-size: 1.25rem;
             margin-bottom: 15px;
-            color: #343a40;
+            color: #4e54c8;
+            font-weight: 600;
         }
         .form-group {
             margin-bottom: 15px;
         }
         .btn-action {
             margin-right: 5px;
-            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-block; /* Ensure proper display */
+            text-align: center; /* Center text */
+            cursor: pointer; /* Show pointer cursor */
+            margin-bottom: 3px; /* Add space between buttons */
+            min-width: 80px; /* Minimum width */
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background-color: #4e54c8;
+            border: none;
+            color: white !important; /* Ensure text color is white */
+        }
+        .btn-success {
+            background-color: #38b2ac;
+            border: none;
+            color: white !important;
+        }
+        .btn-danger {
+            background-color: #ff6b6b;
+            border: none;
+            color: white !important;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            color: white !important;
+        }
+        .text-muted {
+            color: #6c757d !important;
+        }
+        
+        /* Fix for button display */
+        .table a.btn {
+            text-decoration: none;
             display: inline-block;
+            margin-bottom: 2px;
+        }
+        
+        /* Ensure icons display properly */
+        .fas {
+            display: inline-block;
+            margin-right: 4px;
         }
     </style>
 </head>
@@ -123,6 +191,7 @@
         <div class="container mt-4">
             <div class="content-container">
                 <h2 class="page-title"><i class="fas fa-flag me-2"></i>Manage Milestones</h2>
+                <p class="text-muted">Track project progress with key achievements</p>
                 
                 <!-- Milestone List Section -->
                 <div class="grid-container">
@@ -131,28 +200,33 @@
                         CssClass="table table-striped table-hover custom-grid">
                         <Columns>
                             <asp:TemplateField HeaderText="Actions">
-    <ItemTemplate>
-        <div class="d-flex flex-wrap">
-            <asp:LinkButton ID="EditButton" runat="server" CommandName="Edit" CssClass="btn btn-sm btn-primary btn-action">
-                <i class="fas fa-edit"></i> Edit
-            </asp:LinkButton>
-            <asp:LinkButton ID="DeleteButton" runat="server" CommandName="Delete" CssClass="btn btn-sm btn-danger btn-action"
-                OnClientClick="return confirm('Are you sure you want to delete this milestone?');">
-                <i class="fas fa-trash"></i> Delete
-            </asp:LinkButton>
-        </div>
-    </ItemTemplate>
-    <EditItemTemplate>
-        <div class="d-flex flex-wrap">
-            <asp:LinkButton ID="UpdateButton" runat="server" CommandName="Update" CssClass="btn btn-sm btn-success btn-action">
-                <i class="fas fa-save"></i> Save
-            </asp:LinkButton>
-            <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel" CssClass="btn btn-sm btn-secondary btn-action">
-                <i class="fas fa-times"></i> Cancel
-            </asp:LinkButton>
-        </div>
-    </EditItemTemplate>
-</asp:TemplateField>
+                                <ItemTemplate>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <asp:LinkButton ID="EditButton" runat="server" CommandName="Edit" 
+                                            CssClass="btn btn-sm btn-primary btn-action" role="button">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="DeleteButton" runat="server" CommandName="Delete" 
+                                            CssClass="btn btn-sm btn-danger btn-action" role="button"
+                                            OnClientClick="return confirm('Are you sure you want to delete this milestone?');">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </asp:LinkButton>
+                                    </div>
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <asp:LinkButton ID="UpdateButton" runat="server" CommandName="Update" 
+                                            CssClass="btn btn-sm btn-success btn-action" role="button">
+                                            <i class="fas fa-save"></i> Save
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel" 
+                                            CssClass="btn btn-sm btn-secondary btn-action" role="button">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </asp:LinkButton>
+                                    </div>
+                                </EditItemTemplate>
+                                <ItemStyle Width="150px" />
+                            </asp:TemplateField>
                             <asp:BoundField DataField="MILESTONE_ID" HeaderText="ID" ReadOnly="True" SortExpression="MILESTONE_ID" />
                             <asp:TemplateField HeaderText="Project" SortExpression="PROJECT_ID">
                                 <EditItemTemplate>
@@ -283,16 +357,19 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" CssClass="btn btn-success">
+                                <asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" 
+                                    CssClass="btn btn-success" role="button">
                                     <i class="fas fa-plus-circle me-1"></i> Add Milestone
                                 </asp:LinkButton>
-                                <asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" CssClass="btn btn-secondary ms-2">
+                                <asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" 
+                                    CssClass="btn btn-secondary ms-2" role="button">
                                     <i class="fas fa-times me-1"></i> Cancel
                                 </asp:LinkButton>
                             </div>
                         </InsertItemTemplate>
                         <ItemTemplate>
-                            <asp:LinkButton ID="NewButton" runat="server" CausesValidation="False" CommandName="New" CssClass="btn btn-primary">
+                            <asp:LinkButton ID="NewButton" runat="server" CausesValidation="False" CommandName="New" 
+                                CssClass="btn btn-primary" role="button">
                                 <i class="fas fa-plus-circle me-1"></i> New Milestone
                             </asp:LinkButton>
                         </ItemTemplate>
@@ -301,8 +378,21 @@
             </div>
         </div>
 
+        <!-- jQuery (required for some Bootstrap features) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom Script to ensure FontAwesome icons load properly -->
+        <script>
+            $(document).ready(function() {
+                // Force FontAwesome to refresh (helps in some scenarios)
+                setTimeout(function() {
+                    $('head link[href*="font-awesome"]').attr('href', function(i, href) {
+                        return href;
+                    });
+                }, 100);
+            });
+        </script>
     </form>
 </body>
 </html>
