@@ -261,6 +261,13 @@
                             </asp:TemplateField>
                             <asp:BoundField DataField="DESCRIPTION" HeaderText="Description" SortExpression="DESCRIPTION" />
                             <asp:BoundField DataField="PROGRESS_PERCENTAGE" HeaderText="Progress %" SortExpression="PROGRESS_PERCENTAGE" />
+                            <asp:TemplateField HeaderText="Project name">
+                                <ItemTemplate>
+                                    <asp:DropDownList Enabled="false" ID="DropDownList3" runat="server" DataSourceID="SqlDataSourceProjectName" DataTextField="P_TASKNAME" DataValueField="PROJECT_ID" SelectedValue='<%# Bind("PROJECT_ID") %>'>
+                                    </asp:DropDownList>
+                                    <asp:SqlDataSource ID="SqlDataSourceProjectName" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand="SELECT &quot;P_TASKNAME&quot;, &quot;PROJECT_ID&quot; FROM &quot;PROJECT&quot;"></asp:SqlDataSource>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>

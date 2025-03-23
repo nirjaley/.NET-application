@@ -229,28 +229,18 @@
                     ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" 
                     SelectCommand="SELECT * FROM (
     SELECT 
-        user_name,
-        user_email,
-        user_contact,
-        COUNT(*) AS completed_tasks
-    FROM 
-        Users u
-    WHERE 
-        user_id IN (
-            SELECT user_id 
-            FROM Task_Assignment ta
-            JOIN Task_Details td ON ta.task_id = td.task_id
-            WHERE td.status = 'Completed'
-            AND (NVL(:project, 0) = 0 OR ta.project_id = :project)
-        )
-    GROUP BY 
-        user_name,
-        user_email,
-        user_contact
-    ORDER BY 
-        completed_tasks DESC
-)
-WHERE ROWNUM &lt;= 3">
+        u.user_name,
+        u.user_email,
+        u.user_contact,
+        COUNT(td.task_id) AS completed_tasks
+    FROM Users u
+    JOIN Task_Assignment ta ON u.user_id = ta.user_id
+    JOIN Task_Details td ON ta.task_id = td.task_id
+    WHERE td.status = 'Completed'
+    AND (:project = 0 OR ta.project_id = :project)
+    GROUP BY u.user_id, u.user_name, u.user_email, u.user_contact
+    ORDER BY completed_tasks DESC
+) WHERE ROWNUM &lt;= 3">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="DropDownList1" Name="project" PropertyName="SelectedValue" />
                     </SelectParameters>

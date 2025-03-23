@@ -252,6 +252,20 @@
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("USER_ID") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Task name">
+                                <ItemTemplate>
+                                    <asp:DropDownList Enabled="false" ID="DropDownList5" runat="server" DataSourceID="SqlDataSourceTaskName" DataTextField="TASK_NAME" DataValueField="TASK_ID" SelectedValue='<%# Bind("TASK_ID") %>'>
+                                    </asp:DropDownList>
+                                    <asp:SqlDataSource ID="SqlDataSourceTaskName" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand="SELECT &quot;TASK_ID&quot;, &quot;TASK_NAME&quot; FROM &quot;TASK_DETAILS&quot;"></asp:SqlDataSource>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="User associated">
+                                <ItemTemplate>
+                                    <asp:DropDownList Enabled="false" ID="DropDownList6" runat="server" DataSourceID="SqlDataSourceUserName" DataTextField="USER_NAME" DataValueField="USER_ID" SelectedValue='<%# Bind("USER_ID") %>'>
+                                    </asp:DropDownList>
+                                    <asp:SqlDataSource ID="SqlDataSourceUserName" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand="SELECT &quot;USER_ID&quot;, &quot;USER_NAME&quot; FROM &quot;USERS&quot;"></asp:SqlDataSource>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>

@@ -238,6 +238,13 @@
                                     <asp:Label ID="Label4" runat="server" Text='<%# Bind("MILESTONE_ID") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Milestone Title">
+                                <ItemTemplate>
+                                    <asp:DropDownList Enabled="false" ID="DropDownList4" runat="server" DataSourceID="SqlDataSourceMilestoneTitle" DataTextField="MILESTONE_NAME" DataValueField="MILESTONE_ID" SelectedValue='<%# Bind("MILESTONE_ID") %>'>
+                                    </asp:DropDownList>
+                                    <asp:SqlDataSource ID="SqlDataSourceMilestoneTitle" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand="SELECT &quot;MILESTONE_NAME&quot;, &quot;MILESTONE_ID&quot; FROM &quot;MILESTONE&quot;"></asp:SqlDataSource>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>
