@@ -20,16 +20,13 @@
         .navbar {
             background-color: #4e54c8;
             background-image: linear-gradient(to right, #4e54c8, #8f94fb);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .navbar-brand {
             font-weight: bold;
             color: white;
-            letter-spacing: 0.5px;
         }
         .nav-link {
             color: rgba(255,255,255,.85);
-            transition: all 0.3s ease;
             margin-right: 5px;
             border-radius: 4px;
             padding: 8px 15px !important;
@@ -42,11 +39,9 @@
             color: #4e54c8 !important;
             font-weight: 500;
             background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .dropdown-menu {
             border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .dropdown-item:hover {
             background-color: #f3f4f8;
@@ -54,14 +49,8 @@
         .stats-card {
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,.05);
             margin-bottom: 20px;
-            transition: transform 0.3s ease;
             border-top: 4px solid transparent;
-        }
-        .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,.1);
         }
         .stats-card .card-body {
             padding: 20px;
@@ -83,7 +72,6 @@
         .chart-container {
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,.05);
             padding: 25px;
             margin-bottom: 25px;
         }
@@ -124,13 +112,7 @@
             border-radius: 8px;
             padding: 12px;
             font-weight: 500;
-            transition: all 0.3s ease;
             border: none;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        .quick-link-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
         .btn-primary {
             background-color: #4e54c8;
@@ -566,6 +548,9 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: {
+                            duration: 0 // Disable animations
+                        },
                         scales: {
                             y: {
                                 beginAtZero: true,
@@ -614,6 +599,9 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: {
+                            duration: 0 // Disable animations
+                        },
                         plugins: {
                             legend: {
                                 position: 'right',
@@ -655,6 +643,9 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: {
+                            duration: 0 // Disable animations
+                        },
                         scales: {
                             y: {
                                 beginAtZero: true,
@@ -704,6 +695,9 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: {
+                            duration: 0 // Disable animations
+                        },
                         plugins: {
                             legend: {
                                 position: 'right',
